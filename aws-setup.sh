@@ -1,7 +1,7 @@
 
 
 ## TO DO 
-
+    #finish phase 4
     # write this as a bash script
     # set up PosgreSQL
     # write demo app that persistes to PosgreSQL/serves the DB
@@ -9,9 +9,24 @@
         # maybe do an EBS volume
 
 
+
+
+
+
 # Start to finish how to set up a RHEL server on AWS EC2 by Kirby
 
-#this guide meant for users utlizing osx w/ ssh via terminal  
+#this guide meant for users utlizing osx w/ ssh via terminal and is broken into 4 phases
+
+#PHASE 1 CREATE AN EC2 AWS RHEL INSTANCE 
+
+#PHASE 2 SET UP RAILS ENVIROMENT
+
+#PHASE 3 Creating an RAILS DEV ENVIORMENT AMI (so you dont have to do this all again)
+
+#PHASE 4 WIP Load balancer (Classic Load Balancer)
+
+
+#PHASE 1 CREATE AN EC2 AWS RHEL INSTANCE 
 
 #Create an AWS Account 
 
@@ -76,7 +91,7 @@
 
 # PHASE 1 COMPLETE
 
-# PHASE 2 
+# PHASE 2 Set up Rails enviroment 
 
 # there are two ways we can go about this, installing via git or wget, for my sake I am going to do niether and just run a rails basic homepage to prove that the server is up and running
 
@@ -139,3 +154,55 @@
 #now you can go back to your dashboard copy your public DNs (IPv4) from the aws instance console and go to it in your url + port for example      
 
     # http://1.12.12.123:3000/
+
+# PHASE 2 Complete
+
+
+# PHASE 3 Creating an RAILS DEV ENVIORMENT AMI (so you dont have to do this all again)
+
+ #go to your console and right click on your instance and click create image, lets name it "rails dev enviroment" or whatever
+
+#on your dashboard select AMIs and wait for it clone 
+
+#right click launch and follow the same steps when we first set up the original instance w/security + key pairs
+
+#ssh into it with the new DNS ..everything should be there including the project we spun up(* I recommend going back into your O instance and deleteing the rails project we made so that it truly is blank dev enviroment)
+
+# PHASE 3 COMPLETE
+
+
+# PHASE 4 Load balancer (Classic Load Balancer)
+
+# go to load balance in your dashboard , hit create load balancer , give it a name (rails-demo-load-balancer), check "Enable advanced VPC configuration", scroll down and add as many subnets as you like, then in the middle of the page determine what port you want to redirect http requests (defualt 80) to in an instance... for mine I want port 3000 since this is where rails will be listening on..
+
+#Select the same security group as always
+
+#HEALTH CHECKS
+
+        # the breakdown is as follows
+
+        # we give it a port to ping (3000)
+
+        # our ping path can just be  "/"
+
+        #Response Timeout - lets set it 5 for demo
+        #time out of request
+
+        #Interval - lets set it 5 for demo
+        #(every x amount of time I want to make a ping #request to the instance)
+
+        #Unhealthy threshold  - lets set it 2 for demo
+        #(if x amount is it the instance is considered unhealthy, the load balance will stop sending traffic to it)
+
+        #Healthy threshold - lets set at 3 for demo
+        #(if there are x amount good status res(ex 200) then the instance is considered healthy and send traffic toit)
+
+#check mark both the ec2 instances and click through to create the load balancer
+
+# ssh into both instances (cmd+t in terminal to open two windows)
+#make sure both servers are running with rails s -b 0.0.0.0
+
+#you will start to see several ping request come through and then after the healthy threshold we set the server will be open on an http 80 request and then router to 3000 on the backend
+
+
+### FINISH I NEED TO RENDER AN INDEX HTML TO TEST 

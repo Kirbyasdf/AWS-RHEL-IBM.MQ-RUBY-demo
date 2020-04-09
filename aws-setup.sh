@@ -1,15 +1,17 @@
 
 
 ## TO DO 
-    #finish phase 4
+    #finish phase 5
     # write this as a bash script
-    # set up PosgreSQL
+    # set up PosgreSQL 
     # write demo app that persistes to PosgreSQL/serves the DB
     
         # maybe do an EBS volume
-
-
-
+        # maybe in phase 2.5 find a way to make sure packages are the same acorss OS? is it possible?
+        
+        #DISREGARD THIS 
+        #Required ruby-2.6.1 is not installed.
+        #To install do: 'rvm install "ruby-2.6.1"
 
 
 
@@ -21,10 +23,19 @@
 
 #PHASE 2 SET UP RAILS ENVIROMENT
 
+#Phase 2.5 (optional deploy a rails app from wget/github, will need for phase 4)
+
 #PHASE 3 Creating an RAILS DEV ENVIORMENT AMI (so you dont have to do this all again)
 
-#PHASE 4 WIP Load balancer (Classic Load Balancer)
+#PHASE 4 (requires Phase 2.5)  Load balancer (Classic Load Balancer)
 
+#PHASE 5 PostgreSQL install + mini app deployment
+
+
+
+
+
+#----START
 
 #PHASE 1 CREATE AN EC2 AWS RHEL INSTANCE 
 
@@ -93,7 +104,7 @@
 
 # PHASE 2 Set up Rails enviroment 
 
-# there are two ways we can go about this, installing via git or wget, for my sake I am going to do niether and just run a rails basic homepage to prove that the server is up and running
+# there are two ways we can go about this, installing via git or wget, for the first part of this  I am going to do niether and just run a rails basic homepage to prove that the server is up and running, then in phase 
 
 #if u would rather build your rails app locally then wget/git clone it into it, run the following commands
 
@@ -158,6 +169,79 @@
 # PHASE 2 Complete
 
 
+# PHASE 2.5 ADD a "functional" rails app that will allow us to test load balancing
+
+    # you can find the code for this here 
+       #https://github.com/Kirbyasdf/aws-ruby-rails-demo
+
+ #this part is assuming you have a rails enviroment on your machine
+    
+    # mkdir for this and cd into it
+    # rails new <your project name here>
+    # rails has a built in tester command we are going to use first then we are going to add our own route to help you get the grasp of it
+    
+     #in your command line run the following commands
+        # rails generate controller Greetings hello
+
+            #add the following in /app/controllers/greetings_controller.rb
+            #    class GreetingsController < ApplicationController
+                #   def hello
+                #     @message = "Hello, how are you today?"
+                #   end
+                # end
+
+            #add the following in in /app/views/greetings/hello.html.erb
+                     # <h1>A Greeting for You!</h1>
+                    # <p><%= @message %></p>
+
+         #now go to  http://localhost:3000/greetings/hello. 
+
+    
+    #now we are going to add our own route + "response"
+
+            # in /app/controllers/greetings_controller.rb
+            # add the following method
+                   #def test
+                #     @text = params[:testparams]
+                #     render plain: @text
+                #   end
+
+            # add the follwoing in /config/routes.rb
+                #  get "/:testparams", to: "greetings#test"
+                    #(what this is saying at this <url> go to the <greetings> controller and trigger the method <test>...we are using :testParams because I want to render back the params, you'll notice in the method " params[:testparams]")
+        
+        #   now anything attached to localhost:3000/<HERE> will be sent back... try it out http://localhost:3000/its-working
+
+
+    #now push this code up to git 
+
+
+#switch back to the instance install git or wget, and remove the other rails app
+
+    #rm -r <your rails project name>
+
+# then clone the repo you just pushed up 
+
+# cd into it 
+#( you may have to change your versions, the cmd line will tell you what to run)
+
+ #if ur rails command disappears after switching ruby rails just run
+ 
+     #gem rails install 
+     #bundle install
+
+## TODO see if there is a way to make sure all packages are the same..may not due to different OS...
+
+
+#launch your server with the same command as before #rails s -b 0.0.0.0
+
+#test out the routes just like before with
+    #  http://1.23.45.678:3000/greetings/hello
+    # http://1.23.45.678:3000/<ANYTHING you LIKE>
+
+
+#PHASE 2.5 COMLPLETE
+
 # PHASE 3 Creating an RAILS DEV ENVIORMENT AMI (so you dont have to do this all again)
 
  #go to your console and right click on your instance and click create image, lets name it "rails dev enviroment" or whatever
@@ -166,7 +250,7 @@
 
 #right click launch and follow the same steps when we first set up the original instance w/security + key pairs
 
-#ssh into it with the new DNS ..everything should be there including the project we spun up(* I recommend going back into your O instance and deleteing the rails project we made so that it truly is blank dev enviroment)
+#ssh into it with the new DNS ..everything should be there including the project we spun up(* I recommend going back into your O instance and deleteing the rails project we made so that it truly is blank dev enviroment) w/ #rm -r <YOUR PROJECT NAME> 
 
 # PHASE 3 COMPLETE
 
@@ -183,7 +267,7 @@
 
         # we give it a port to ping (3000)
 
-        # our ping path can just be  "/"
+        # our ping path can just be  "/greetings/hello" 
 
         #Response Timeout - lets set it 5 for demo
         #time out of request
@@ -202,7 +286,10 @@
 # ssh into both instances (cmd+t in terminal to open two windows)
 #make sure both servers are running with rails s -b 0.0.0.0
 
-#you will start to see several ping request come through and then after the healthy threshold we set the server will be open on an http 80 request and then router to 3000 on the backend
+#in your terminal windows you will start to see several ping request come through and then after the healthy threshold we set the server will be open on an http 80 request and then router to 3000 on the backend
+
+# go to your load balancer and in the bottom select instances and you should see that both are "inService"
 
 
-### FINISH I NEED TO RENDER AN INDEX HTML TO TEST 
+#PHASE 5 instal PostgreSQL and have a mini rails app with persistenace.
+

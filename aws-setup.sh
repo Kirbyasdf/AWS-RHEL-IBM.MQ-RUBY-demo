@@ -1,5 +1,13 @@
 
 
+## TO DO 
+
+    # write this as a bash script
+    # set up PosgreSQL
+    # write demo app that persistes to PosgreSQL/serves the DB
+    
+        # maybe do an EBS volume
+
 
 # Start to finish how to set up a RHEL server on AWS EC2 by Kirby
 
@@ -79,7 +87,7 @@
         #sudo yum install git-all
 
     #wget
-
+        #sudo yum install wget
 
 
 # install dependencies 
@@ -126,3 +134,8 @@
     #rails s -b 0.0.0.0 
     #for custom port 
     #rails s -p <urPOrt> -b 0.0.0.0
+
+
+#now you can go back to your dashboard copy your public DNs (IPv4) from the aws instance console and go to it in your url + port for example      
+
+    # http://1.12.12.123:3000/

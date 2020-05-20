@@ -17,7 +17,7 @@
 
 # Start to finish how to set up a RHEL server on AWS EC2 by Kirby
 
-#this guide meant for users utlizing osx w/ ssh via terminal and is broken into 4 phases
+#this guide meant for users utlizing osx w/ ssh via terminal and is broken into 5(4) phases
 
 #PHASE 1 CREATE AN EC2 AWS RHEL INSTANCE 
 

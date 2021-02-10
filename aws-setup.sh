@@ -131,6 +131,10 @@ ex. chmod 400 ~crane/Downloads/mykey.pem
     #we're going to install rails and ruby w/ RVM in one line
 
         #curl -sSL https://get.rvm.io | bash -s stable --rails
+        
+    #** you may need to run this, if prompted
+        
+        #source /home/ec2-user/.rvm/scripts/rvm
 
     #now we're going to run a logic script to let us call rmv
 

@@ -49,6 +49,8 @@
 
 # chmod 400 (the file location) file.pem
 
+ex. chmod 400 ~crane/Downloads/mykey.pem
+
 
 # in ec2 console choose you region then add a new security group 
 

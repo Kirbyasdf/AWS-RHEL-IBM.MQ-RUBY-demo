@@ -45,9 +45,9 @@
 
 #For Name, enter a descriptive name for the new key pair, such as your name, followed by -key-pair, plus the Region name. For example, me-key-pair-useast2.
 
-#Dowload keypair and modify via terminal as so
+#Dowload keypair and modify via terminal as so (*it will automatically download)
 
-# chmod 400 your_user_name-key-pair-region_name.pem
+# chmod 400 (the file location) file.pem
 
 
 # in ec2 console choose you region then add a new security group 
